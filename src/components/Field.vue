@@ -5,8 +5,21 @@ import { useGameStore } from "../store";
 
 const store = useGameStore();
 
-const createTurn = (cell: number) => {
+const createTurn = (cell: number): void => {
   store.addTurn(cell);
+};
+
+const setWinCell = (pos: number): boolean => {
+  if (store.winState === "cross")
+    return store.crossTurns.find((el) => el === pos) !== undefined
+      ? true
+      : false;
+  if (store.winState === "zero")
+    return store.zeroTurns.find((el) => el === pos) !== undefined
+      ? true
+      : false;
+
+  return false;
 };
 
 defineComponent({
@@ -31,6 +44,7 @@ defineComponent({
       :key="idx"
       :pos="idx"
       :type="item"
+      :winCell="setWinCell(idx)"
       :class="{ 'last-item': store.lastSignIndex === idx }"
       @add-turn="createTurn"
     />

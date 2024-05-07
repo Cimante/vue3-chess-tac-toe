@@ -10,6 +10,10 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  winCell: {
+    type: Boolean,
+    default: false,
+  },
   type: {
     type: String as PropType<States>,
     required: true,
@@ -24,7 +28,7 @@ function cellClick() {
 </script>
 
 <template>
-  <div class="cell" @click="cellClick">
+  <div class="cell" @click="cellClick" :class="{ green: winCell }">
     <span v-if="type === 'cross'">❌</span>
     <span v-if="type === 'zero'">⭕</span>
     <span v-else></span>
@@ -53,6 +57,10 @@ function cellClick() {
   span {
     outline: none;
     font-size: 24px;
+  }
+
+  &.green {
+    background-color: rgba(lightgreen, 0.5);
   }
 }
 </style>
